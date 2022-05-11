@@ -97,15 +97,16 @@ async def predict_tumor_class(data:TumorData):
     worst_compactness = data['worst_compactness']
     worst_concavity = data['worst_concavity']
     worst_concave_points = data['worst_concave_points']
+    
   
 
     predicted__tumor_class = classifier.predict([[mean_radius,mean_perimeter,mean_area,mean_smoothness,mean_compactness,mean_concavity,mean_concave_points,radius_error,perimeter_error,area_error,concavity_error,concave_points_error,worst_radius,worst_texture,worst_perimeter,worst_area,worst_smoothness,worst_compactness,worst_concavity,worst_concave_points]])
     
     if (predicted__tumor_class[0] == 0):
-        return {"prediction": "The Breast cancer is Malignant. Please enroll this patient for therapy or treament"}
+        return {"prediction": "The breast cancer is malignant. Please enroll this patient for therapy or treament."}
 
     else:
-       return {"prediction": "The Breast Cancer is Benign. Enroll this patient for therapy or treatment if symptoms start being problem 🙂"}
+       return {"prediction": "The breast cancer is benign. Enroll this patient for therapy or treatment if symptoms start being problem🙂."}
   
 
 

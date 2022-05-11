@@ -7,3 +7,7 @@
 
 #Caches
 /server/__pycache__
+
+
+#Mode Modules
+/web-client/node_modules
