@@ -1,4 +1,4 @@
-import logo from './logo.png';
+import logo from './../assets/logo.png';
 import {useRef,useState,useEffect} from "react";
 import { useViewportScroll } from "framer-motion";
 import {chakra,Flex,HStack,Link,useColorModeValue,Box,Image,Text} from "@chakra-ui/react";
