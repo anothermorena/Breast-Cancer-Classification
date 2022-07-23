@@ -1,4 +1,4 @@
-import {FaLinkedin,FaGithub, FaPeopleCarry} from "react-icons/fa";
+import {FaLinkedin,FaGithub} from "react-icons/fa";
 import { chakra, Flex, Icon, useColorModeValue } from "@chakra-ui/react";
 
 const Footer = () => {
@@ -13,7 +13,7 @@ const Footer = () => {
             <Icon as={FaLinkedin} boxSize="5" viewBox="0 0 24 24" fill="currentColor"/>
           </chakra.a>
 
-          <chakra.a href="https://github.com/anothermorena" target="_blank" m={2} color="gray.600" _hover={{color: "pink.400"}} aria-label="Github">
+          <chakra.a href="https://github.com/anothermorena/Breast-Cancer-Classification" target="_blank" m={2} color="gray.600" _hover={{color: "pink.400"}} aria-label="Github">
             <Icon as={FaGithub} boxSize="5"  viewBox="0 0 24 24" fill="currentColor" />
           </chakra.a>
           

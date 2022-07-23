@@ -27,7 +27,7 @@ const Header = () => {
             <Flex align="center">
               <Link href="/">
                 <HStack>
-                  <Image boxSize='60px' src={logo} alt="breast-cancer-logo"/>
+                  <Image boxSize='80px' src={logo} alt="breast-cancer-logo"/>
                 </HStack>
               </Link>
             </Flex>

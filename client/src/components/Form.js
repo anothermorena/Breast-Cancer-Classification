@@ -1,6 +1,6 @@
 import axios from '../api/axios';
 import { useState,useEffect} from 'react';
-import {Flex,Box,FormControl,FormLabel,Input,HStack,Stack,Button,Text,useColorModeValue,useToast} from '@chakra-ui/react';
+import {Flex,Box,FormControl,FormLabel,Input,Stack,Button,Text,useColorModeValue,useToast,Spinner } from '@chakra-ui/react';
 
 //The api end point we need to call to make our predictions 
 const PREDICTION_URL = '/predict';
@@ -30,6 +30,7 @@ const PREDICTION_URL = '/predict';
     const [worstConcavePoints, setWorstConcavePoints] = useState("");
     const [prediction, setPrediction] = useState("");
     const [errMsg, setErrMsg] = useState("");
+    const [loading, setLoading] = useState(false);
     const toast = useToast();
 
 
@@ -44,6 +45,7 @@ const PREDICTION_URL = '/predict';
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
 
     const tumorData = {
         meanRadius, 
@@ -113,9 +115,9 @@ const PREDICTION_URL = '/predict';
                 setErrMsg('No Server Response.');
             } else {
                 setErrMsg('Making A Prediction Failed.');
-            }
-            
+            }    
         }
+        setLoading(false);
     }
 
     useEffect(() => {
@@ -143,160 +145,145 @@ const PREDICTION_URL = '/predict';
       }, [prediction,errMsg]);
   
     return (
-      <Flex  align={'center'} justify={'center'} bg={useColorModeValue('gray.50', 'gray.800')}>
-        <Stack spacing={8} mx={'auto'} py={12} px={6}>
+      <Flex rounded={'lg'} bg={useColorModeValue('gray.50', 'gray.800')}>
+        <Stack mx={'auto'} py={12} px={6} alignItems="center" justifyContent="center">
           <Box rounded={'lg'} boxShadow={'lg'} p={8}>
-          <Text fontSize={'lg'}>Please enter the following tumor details to classify it as either benign or malignant:</Text>
-            <br/>
-            <Stack spacing={4}>
+          <Text mb={5}>Please enter the following tumor details to classify it as either benign or malignant:</Text>
+            <Stack spacing={4} direction={{base: 'row', sm: 'column'}} >
             <form onSubmit={handleSubmit}>
-              <HStack>
-                <Box>
-                  <FormControl id="meanRadius">
-                    <FormLabel >Mean Radius</FormLabel>
-                    <Input value={meanRadius} onChange={(e) => setMeanRadius(e.target.value)}/>
-                  </FormControl>
-                </Box>
-                <Box>
-                  <FormControl id="meanPerimeter">
-                    <FormLabel>Mean Perimeter</FormLabel>
-                    <Input value={meanPerimeter} onChange={(e) => setMeanPerimeter(e.target.value)}/>
-                  </FormControl>
-                </Box>
-                <Box>
-                  <FormControl id="meanArea">
-                    <FormLabel>Mean Area </FormLabel>
-                    <Input  value={meanArea} onChange={(e) => setMeanArea(e.target.value)}/>
-                  </FormControl>
-                </Box>
-                <Box>
-                  <FormControl id="meanSmoothness">
-                    <FormLabel>Mean Smoothness</FormLabel>
-                    <Input  value={meanSmoothness} onChange={(e) => setMeanSmoothness(e.target.value)}/>
-                  </FormControl>
-                </Box>
-              </HStack>
 
-              <HStack>
-                <Box>
-                  <FormControl id="meanCompactness">
-                    <FormLabel>Mean Compactness</FormLabel>
-                    <Input  value={meanCompactness} onChange={(e) => setMeanCompactness(e.target.value)}/>
-                  </FormControl>
-                </Box>
-                <Box>
-                  <FormControl id="meanConcavity">
-                    <FormLabel>Mean Concavity</FormLabel>
-                    <Input  value={meanConcavity} onChange={(e) => setMeanConcavity(e.target.value)}/>
-                  </FormControl>
-                </Box>
-                <Box>
-                  <FormControl id="meanConcavePoints">
-                    <FormLabel>Mean Concave Points</FormLabel>
-                    <Input   value={meanConcavePoints} onChange={(e) => setMeanConcavePoints(e.target.value)}/>
-                  </FormControl>
-                </Box>
-                <Box>
-                  <FormControl id="radiusError">
-                    <FormLabel>Radius Error</FormLabel>
-                    <Input  value={radiusError} onChange={(e) => setRadiusError(e.target.value)}/>
-                  </FormControl>
-                </Box>
-              </HStack>
+              <FormControl id="meanRadius">
+                <FormLabel >Mean Radius</FormLabel>
+                <Input value={meanRadius} onChange={(e) => setMeanRadius(e.target.value)}/>
+              </FormControl>
 
-              <HStack>
-                <Box>
-                  <FormControl id="perimeterError">
-                    <FormLabel>Perimeter Error</FormLabel>
-                    <Input  value={perimeterError} onChange={(e) => setPerimeterError(e.target.value)}/>
-                  </FormControl>
-                </Box>
-                <Box>
-                  <FormControl id="areaError">
-                    <FormLabel>Area Error</FormLabel>
-                    <Input  value={areaError} onChange={(e) => setAreaError(e.target.value)}/>
-                  </FormControl>
-                </Box>
-                <Box>
-                  <FormControl id="concavityError">
-                    <FormLabel>Concavity Error</FormLabel>
-                    <Input  value={concavityError} onChange={(e) => setConcavityError(e.target.value)}/>
-                  </FormControl>
-                </Box>
-                <Box>
-                  <FormControl id="concavePointsError">
-                    <FormLabel>Concave Points Error</FormLabel>
-                    <Input  value={concavePointsError} onChange={(e) => setConcavePointsError(e.target.value)}/>
-                  </FormControl>
-                </Box>
-              </HStack>
-
-              <HStack>
-                <Box>
-                  <FormControl id="worstRadius">
-                    <FormLabel >Worst Radius</FormLabel>
-                    <Input  value={worstRadius} onChange={(e) => setWorstRadius(e.target.value)}/>
-                  </FormControl>
-                </Box>
-                <Box>
-                  <FormControl id="worstTexture">
-                    <FormLabel>Worst Texture</FormLabel>
-                    <Input  value={worstTexture} onChange={(e) => setWorstTexture(e.target.value)}/>
-                  </FormControl>
-                </Box>
-                <Box>
-                  <FormControl id="worstPerimeter">
-                    <FormLabel>Worst Perimeter</FormLabel>
-                    <Input  value={worstPerimeter} onChange={(e) => setWorstPerimeter(e.target.value)}/>
-                  </FormControl>
-                </Box>
-                <Box>
-                  <FormControl id="worstArea">
-                    <FormLabel>Worst Area</FormLabel>
-                    <Input  value={worstArea} onChange={(e) => setWorstArea(e.target.value)}/>
-                  </FormControl>
-                </Box>
-              </HStack>
-
-              <HStack>
-                <Box>
-                  <FormControl id="worstSmoothness">
-                    <FormLabel>Worst Smoothness</FormLabel>
-                    <Input  value={worstSmoothness} onChange={(e) => setWorstSmoothness(e.target.value)}/>
-                  </FormControl>
-                </Box>
-                <Box>
-                  <FormControl id="worstCompactness">
-                    <FormLabel>Worst Compactness</FormLabel>
-                    <Input  value={worstCompactness} onChange={(e) => setWorstCompactness(e.target.value)}/>
-                  </FormControl>
-                </Box>
-                <Box>
-                  <FormControl id="worstConcavity">
-                    <FormLabel>Worst Concavity</FormLabel>
-                    <Input  value={worstConcavity} onChange={(e) => setWorstConcavity(e.target.value)}/>
-                  </FormControl>
-                </Box>
-                <Box>
-                  <FormControl id="worstConcavePoints">
-                    <FormLabel>Worst Concave Points</FormLabel>
-                    <Input value={worstConcavePoints} onChange={(e) => setWorstConcavePoints(e.target.value)}/>
-                  </FormControl>
-                </Box>
-              </HStack>
+              <FormControl id="meanPerimeter">
+                <FormLabel>Mean Perimeter</FormLabel>
+                <Input value={meanPerimeter} onChange={(e) => setMeanPerimeter(e.target.value)}/>
+              </FormControl>
+                 
+              <FormControl id="meanArea">
+                <FormLabel>Mean Area </FormLabel>
+                <Input  value={meanArea} onChange={(e) => setMeanArea(e.target.value)}/>
+              </FormControl>
               
-              <Stack spacing={10} pt={2}>
-                <Button
-                  type="submit"
-                  loadingText="Predicting"
+              <FormControl id="meanSmoothness">
+                <FormLabel>Mean Smoothness</FormLabel>
+                <Input  value={meanSmoothness} onChange={(e) => setMeanSmoothness(e.target.value)}/>
+              </FormControl>
+                
+              <FormControl id="meanCompactness">
+                <FormLabel>Mean Compactness</FormLabel>
+                <Input  value={meanCompactness} onChange={(e) => setMeanCompactness(e.target.value)}/>
+              </FormControl>
+                
+              <FormControl id="meanConcavity">
+                <FormLabel>Mean Concavity</FormLabel>
+                <Input  value={meanConcavity} onChange={(e) => setMeanConcavity(e.target.value)}/>
+              </FormControl>
+                
+              <FormControl id="meanConcavePoints">
+                <FormLabel>Mean Concave Points</FormLabel>
+                <Input   value={meanConcavePoints} onChange={(e) => setMeanConcavePoints(e.target.value)}/>
+              </FormControl>
+                
+              <FormControl id="radiusError">
+                <FormLabel>Radius Error</FormLabel>
+                <Input  value={radiusError} onChange={(e) => setRadiusError(e.target.value)}/>
+              </FormControl>
+                
+              <FormControl id="perimeterError">
+                <FormLabel>Perimeter Error</FormLabel>
+                <Input  value={perimeterError} onChange={(e) => setPerimeterError(e.target.value)}/>
+              </FormControl>
+                
+              <FormControl id="areaError">
+                <FormLabel>Area Error</FormLabel>
+                <Input  value={areaError} onChange={(e) => setAreaError(e.target.value)}/>
+              </FormControl>
+                
+              <FormControl id="concavityError">
+                <FormLabel>Concavity Error</FormLabel>
+                <Input  value={concavityError} onChange={(e) => setConcavityError(e.target.value)}/>
+              </FormControl>
+                
+              <FormControl id="concavePointsError">
+                <FormLabel>Concave Points Error</FormLabel>
+                <Input  value={concavePointsError} onChange={(e) => setConcavePointsError(e.target.value)}/>
+              </FormControl>
+                
+              <FormControl id="worstRadius">
+                <FormLabel >Worst Radius</FormLabel>
+                <Input  value={worstRadius} onChange={(e) => setWorstRadius(e.target.value)}/>
+              </FormControl>
+                
+              <FormControl id="worstTexture">
+                <FormLabel>Worst Texture</FormLabel>
+                <Input  value={worstTexture} onChange={(e) => setWorstTexture(e.target.value)}/>
+              </FormControl>
+                
+              <FormControl id="worstPerimeter">
+                <FormLabel>Worst Perimeter</FormLabel>
+                <Input  value={worstPerimeter} onChange={(e) => setWorstPerimeter(e.target.value)}/>
+              </FormControl>
+                
+              <FormControl id="worstArea">
+                <FormLabel>Worst Area</FormLabel>
+                <Input  value={worstArea} onChange={(e) => setWorstArea(e.target.value)}/>
+              </FormControl>
+                
+              <FormControl id="worstSmoothness">
+                <FormLabel>Worst Smoothness</FormLabel>
+                <Input  value={worstSmoothness} onChange={(e) => setWorstSmoothness(e.target.value)}/>
+              </FormControl>
+                
+              <FormControl id="worstCompactness">
+                <FormLabel>Worst Compactness</FormLabel>
+                <Input  value={worstCompactness} onChange={(e) => setWorstCompactness(e.target.value)}/>
+              </FormControl>
+                
+              <FormControl id="worstConcavity">
+                <FormLabel>Worst Concavity</FormLabel>
+                <Input  value={worstConcavity} onChange={(e) => setWorstConcavity(e.target.value)}/>
+              </FormControl>
+                
+              <FormControl id="worstConcavePoints">
+                <FormLabel>Worst Concave Points</FormLabel>
+                <Input value={worstConcavePoints} onChange={(e) => setWorstConcavePoints(e.target.value)}/>
+              </FormControl>
+                
+              <Stack spacing={10} pt={2}>  
+                {loading && (
+                  <Button
                   size="lg"
                   bg={'pink.400'}
                   color={'white'}
                   _hover={{
                     bg: 'pink.500',
                   }}>
-                  Classify Tumor
-                </Button>
+                    <Spinner
+                      thickness='4px'
+                      speed='0.65s'
+                      emptyColor='gray.200'
+                      color='white'
+                      size='lg'
+                    />   
+                </Button> 
+               )}
+
+                {!loading && (
+                   <Button
+                   type="submit"
+                   size="lg"
+                   bg={'pink.400'}
+                   color={'white'}
+                   _hover={{
+                     bg: 'pink.500',
+                   }}>
+                   Classify Tumor
+                 </Button> 
+                )}
+                
               </Stack>
               </form>
             </Stack>
