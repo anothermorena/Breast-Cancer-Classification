@@ -11,3 +11,6 @@
 
 #Mode Modules
 /client/node_modules
+
+#Vercel
+/client/.vercel
