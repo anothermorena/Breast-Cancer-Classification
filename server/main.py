@@ -6,7 +6,7 @@ Created on Wed May 8 18:38:31 2022
 
 """
 
-#pip install fastapi uvicorn pickle in your virtual environment
+#pip install fastapi uvicorn in your virtual environment
 
 #1. Library imports
 import pickle
