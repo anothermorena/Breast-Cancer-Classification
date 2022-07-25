@@ -23,6 +23,7 @@ app = FastAPI()
 origins = [
     "http://localhost",
     "http://localhost:3000",
+    "https://bcca.vercel.app",
 ]
 app.add_middleware(
     CORSMiddleware,
@@ -33,7 +34,7 @@ app.add_middleware(
 )
 
 #3. Load the  model pickle file into our app
-pickle_in = open("../model/breast_cancer_classification_model.pickle","rb")
+pickle_in = open("breast_cancer_classification_model.pickle","rb")
 
 #4. Initialize our model
 classifier = pickle.load(pickle_in)
