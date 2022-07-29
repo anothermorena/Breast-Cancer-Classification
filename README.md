@@ -1,5 +1,5 @@
 # Project Summary
-This an end-to-end PWA and a supervised machine learning (random forest) project which classifies patients’ abnormal mass of cells(tumors) as either benign(non-cancerous) or malignant(cancerous). The model had 0.99 AUC score, 0.99 Accuracy, 1.0 Precision,0.97 Recall & 0.99 F1-score for class 0 (Cancerous Tumors).
+This is an end-to-end PWA and a supervised machine learning (random forest) project which classifies patients’ abnormal masses of cells (tumors) as either benign (non-cancerous) or malignant (cancerous). The model had a 0.99 AUC score, 0.99 Accuracy, 1.0 Precision, 0.97 Recall, and a 0.99 F1-score for class 0 (Cancerous Tumors).
 
 # [App Link](https://bcca.vercel.app)
 
